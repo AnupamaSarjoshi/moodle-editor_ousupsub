@@ -39,8 +39,7 @@ and keeping the results HTML as clean as possible.
 * Prevent nesting of superscript and subscript tags
 * No text wrapping is allowed along with no paragraphs. Everything is on one line
 * Configurable height and width of editor
-* Provide a standalone version of the same editor for offline situations such as e-readers
-* Editor can placed where required including inline with text
+* Editor can be placed where required including inline with text
 
 ## Alignment
 

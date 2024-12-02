@@ -65,13 +65,7 @@ class ousupsub_texteditor extends texteditor {
         return false;
     }
 
-    /**
-     * Use this editor for given element.
-     *
-     * @param string $elementid
-     * @param array $options
-     * @param null $fpoptions
-     */
+    #[\Override]
     public function use_editor($elementid, ?array $options = null, $fpoptions = null) {
         global $PAGE, $OUTPUT;
 
