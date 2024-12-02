@@ -53,28 +53,9 @@ However, this only works if the surrounding text is styled not to extremely. We 
 * https://moodle.org/plugins/qtype_varnumunit
 * https://moodle.org/plugins/qtype_combined (Only work if the surrounding text is styled not to extremely)
 
-## Standalone version
-
-More details are in readme_standalone.txt that gets added to the /standalone folder
-A standalone/offline version of the editor is also provided in the /standalone folder. This provides all the
-functionality of the editor in a package that works in an ereader or mobile app or on a desktop to demonstrate
-the functionality of the editor outside of moodle. There feature is currently in beta.
-
-The standalone version is kept up to date by running the buildstandalone.php in the same way you run a behat script
-The full command we use is php lib/editor/ousupsub/buildstandalone.php
-
-Running this script outputs a list of files and features that have been created. First it deletes the contents of the
-standalone folder and then it recreates the standalone files. This ensures the standalone version is as up to date with
-the plugin. This task is performed during development of the editor. If you are using it out of the box you shouldn't
-need to run this script.
-
 ## Testing
 
-Automated testing is through behat and custom javascript unit tests. There is a behat test for the moodle plugin and an
-identical test for the standalone version
-
-The javascript unit tests run in a browser. Load /tests/fixtures/testcleanup.html in a specific browser to see if the
-tests pass in that browser.
+Automated testing is through behat and custom javascript unit tests.
 
 The editor will work any where moodle editors work but it's designed to be used with specific OU question types
 The main places to test are:
@@ -98,16 +79,3 @@ Then we check that subscript was applied correctly.
     Then I should see "Superscript and <sub>Subscript</sub>" in the "Description" ousupsub editor
 
 That is how you read the behat tests and how you know what to expect the editor to do.
-
-## Third-party code
-
-Thanks to the creators of the rangy software library, which we use.
-
-1)  Rangy (version 1.2.3)
-    * Download the latest stable release;
-    * Copy the content of the 'currentrelease/uncompressed' folder into yui/src/rangy/js
-    * Run shifter against yui/src/rangy
-
-    Notes:
-    * We have patched 1.2.3 with a backport fix from the next release of Rangy which addresses an incompatibility
-      between Rangy and HTML5Shiv which is used in the bootstrapclean theme. See MDL-44798 for further information.

@@ -22,16 +22,19 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['button_sub_title'] = 'Subscript [Shift + _ or Down arrow]';
+$string['button_sup_title'] = 'Superscript [Shift + ^ or Up arrow]';
 $string['editor_command_keycode'] = 'Cmd + {$a}';
 $string['editor_control_keycode'] = 'Ctrl + {$a}';
 $string['editor_shift_keycode'] = 'Shift + {$a}';
 $string['plugin_title_shortcut'] = '{$a->title} [{$a->shortcut}]';
 $string['pluginname'] = 'Superscript/subscript editor';
 $string['privacy:metadata'] = 'The Superscript/subscript editor plugin does not store any personal data.';
+$string['redo'] = 'Redo';
 $string['settings'] = 'Superscript/subscript editor settings';
 $string['subscript'] = 'Subscript';
 $string['superscript'] = 'Superscript';
+$string['undo'] = 'Undo';
 $string['useeditor'] = 'Use this editor';
 $string['useeditor_desc'] = 'Use this editor in question types, in preference to the old superscript/subscript editor, if both are installed.';
-$string['redo'] = 'Redo';
-$string['undo'] = 'Undo';
+

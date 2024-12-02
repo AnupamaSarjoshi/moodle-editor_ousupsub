@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022041100;
+$plugin->version   = 2024112600;
 $plugin->requires  = 2020061500;
 $plugin->component = 'editor_ousupsub';
 $plugin->maturity  = MATURITY_STABLE;

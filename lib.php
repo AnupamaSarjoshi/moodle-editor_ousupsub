@@ -15,14 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * YUI text editor integration.
+ * New OU text editor integration.
  *
  * @package   editor_ousupsub
  * @copyright 2014 The Open University
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 
 /**
@@ -48,7 +46,7 @@ class ousupsub_texteditor extends texteditor {
      */
     public function get_supported_formats() {
         // FORMAT_MOODLE is not supported here, sorry.
-        return array(FORMAT_HTML => FORMAT_HTML);
+        return [FORMAT_HTML => FORMAT_HTML];
     }
 
     /**
@@ -74,8 +72,8 @@ class ousupsub_texteditor extends texteditor {
      * @param array $options
      * @param null $fpoptions
      */
-    public function use_editor($elementid, array $options = null, $fpoptions = null) {
-        global $PAGE;
+    public function use_editor($elementid, ?array $options = null, $fpoptions = null) {
+        global $PAGE, $OUTPUT;
 
         if (empty($options['context'])) {
             $options['context'] = context_system::instance();
@@ -84,81 +82,26 @@ class ousupsub_texteditor extends texteditor {
             $options['supsub'] = 'both';
         }
 
-        switch ($options['supsub']) {
-            case 'both':
-                $groups = array('style1' => array('superscript', 'subscript'));
-                break;
-
-            case 'sup':
-                $groups = array('style1' => array('superscript'));
-                break;
-
-            case 'sub':
-                $groups = array('style1' => array('subscript'));
-                break;
-
-            default:
-                throw new coding_exception("Invalid value '" .$options['supsub'] .
-                        "' for option 'supsub'. Must be one of 'both', 'sup' or 'sub'.");
+        if (!in_array($options['supsub'], ['sup', 'sub', 'both'])) {
+            throw new coding_exception("Invalid value '" .$options['supsub'] .
+                "' for option 'supsub'. Must be one of 'both', 'sup' or 'sub'.");
         }
 
-        $groupplugins = array();
-        foreach ($groups['style1'] as $plugin) {
-            $groupplugins[] = array('name' => $plugin, 'params' => array());
-        }
-        $jsplugins = array(array('group' => 'style1', 'plugins' => $groupplugins));
-
-        $PAGE->requires->strings_for_js(array(
-                'editor_command_keycode',
-                'editor_control_keycode',
-                'editor_shift_keycode',
-                'plugin_title_shortcut',
-                'subscript',
-                'superscript',
-                'redo',
-                'undo'
-            ), 'editor_ousupsub');
-        $PAGE->requires->strings_for_js(array(
-                'warning',
-                'info'
-            ), 'moodle');
-
-        $PAGE->requires->yui_module(array('moodle-editor_ousupsub-editor'),
-                'Y.M.editor_ousupsub.createEditor',
-                array($this->get_init_params($elementid, $options, $fpoptions, $jsplugins)));
-
-    }
-
-    /**
-     * Create a params array to init the editor.
-     *
-     * @param string $elementid
-     * @param array $options
-     * @param array $fpoptions
-     */
-    protected function get_init_params($elementid, array $options = null, array $fpoptions = null, $plugins = null) {
-        global $PAGE;
-
-        $directionality = get_string('thisdirection', 'langconfig');
-        $strtime        = get_string('strftimetime');
-        $strdate        = get_string('strftimedaydate');
-        $lang           = current_language();
-        $contentcss     = $PAGE->theme->editor_css_url()->out(false);
-
-        $params = array(
-            'elementid' => $elementid,
-            'content_css' => $contentcss,
-            'contextid' => $options['context']->id,
-            'language' => $lang,
-            'directionality' => $directionality,
-            'filepickeroptions' => array(),
-            'plugins' => $plugins,
-            'pageHash' => sha1($PAGE->url)
-        );
-        if ($fpoptions) {
-            $params['filepickeroptions'] = $fpoptions;
-        }
-
-        return $params;
+        $PAGE->requires->js_call_amd('editor_ousupsub/editor', 'loadEditor', [
+            [
+                'element' => $elementid,
+                'type' => $options['supsub'],
+                'buttons' => [
+                    'superscript' => [
+                        'icon' => $OUTPUT->pix_icon('e/superscript', '', 'core'),
+                        'title' => get_string('button_sup_title', 'editor_ousupsub'),
+                    ],
+                    'subscript' => [
+                        'icon' => $OUTPUT->pix_icon('e/subscript', '', 'core'),
+                        'title' => get_string('button_sub_title', 'editor_ousupsub'),
+                    ],
+                ],
+            ],
+        ]);
     }
 }
